@@ -45,13 +45,12 @@ def chat_api():
             user_message = "Tôi muốn biết làm thế nào để liên kết thẻ tín dụng?"
             system_prompt = system_prompt + "\n\nUser Question: " + user_message + "\nAssistant Answer: Bạn vào phần 'Liên kết tài khoản/thẻ' trong ứng dụng ZaloPay, chọn 'Liên kết thẻ tín dụng' và nhập thông tin thẻ theo hướng dẫn."
 
-        # Tạo payload cho Groq API
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {GROQ_API_KEY}"
         }
         payload = {
-            "model": "llama3-8b-8192",  # Mô hình Groq bạn sử dụng
+            "model": "llama3-8b-8192",  # Mô hình Groq 
             "messages": [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message}
@@ -66,18 +65,15 @@ def chat_api():
         if response.status_code != 200:
             return jsonify({'error': f"Groq API error: {response.text}"}), response.status_code
 
-        # Xử lý phản hồi từ Groq API
         response_data = response.json()
         assistant_message = response_data['choices'][0]['message']['content'].strip()
         return jsonify({'response': assistant_message})
 
     except requests.RequestException as e:
-        # Lỗi khi gửi yêu cầu tới Groq API
         print(f"Lỗi API Groq: {str(e)}")
         return jsonify({'error': f"Lỗi khi gửi yêu cầu tới API Groq: {str(e)}"}), 500
 
     except Exception as e:
-        # Xử lý lỗi bất ngờ
         print(f"Lỗi bất ngờ: {str(e)}")
         return jsonify({'error': f"Lỗi bất ngờ: {str(e)}"}), 500
 
