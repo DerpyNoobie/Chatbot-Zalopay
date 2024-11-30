@@ -20,7 +20,6 @@ def chat_api():
     user_message = data['message']
 
     try:
-        # Prompt định nghĩa vai trò Robo-advisor
         system_prompt = (
             "Bạn là một Robo-advisor thông minh của ZaloPay tại Việt Nam. "
             "Nhiệm vụ của bạn là hỗ trợ người dùng quản lý giá cả, giải đáp thắc mắc về ZaloPay, "
@@ -32,7 +31,6 @@ def chat_api():
             "Làm sao bạn có thể giúp tôi hôm nay?"
         )
 
-        # Thêm các prompt mẫu cho các chủ đề khác nhau:
         if "tiết kiệm" in user_message or "tiết kiệm bao nhiêu" in user_message:
             user_message = "Tôi nên tiết kiệm bao nhiêu phần trăm thu nhập hàng tháng?"
             system_prompt = system_prompt + "\n\nUser Question: " + user_message + "\nAssistant Answer: Bạn nên tiết kiệm ít nhất 20% thu nhập hàng tháng để chuẩn bị cho các mục tiêu dài hạn hoặc tình huống khẩn cấp. Bạn có thể sử dụng tính năng 'Gửi tiết kiệm' trên ZaloPay."
